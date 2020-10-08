@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.izhenius.newsapiapp.R
-import com.izhenius.newsapiapp.data.entity.NewsArticle
+import com.izhenius.newsapiapp.domain.model.NewsArticle
 import com.izhenius.newsapiapp.presentation.view.adapter.NewsArticleAdapter
 import com.izhenius.newsapiapp.presentation.viewModel.NewsArticleViewModel
 import kotlinx.android.synthetic.main.activity_main.*

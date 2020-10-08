@@ -8,23 +8,28 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.izhenius.newsapiapp.R
-import com.izhenius.newsapiapp.data.entity.NewsArticle
+import com.izhenius.newsapiapp.domain.model.NewsArticle
+import com.izhenius.newsapiapp.util.AppConstants
+import com.izhenius.newsapiapp.util.toString
 
 class NewsArticleAdapter : RecyclerView.Adapter<NewsArticleViewHolder>() {
 
     private val items = mutableListOf<NewsArticle>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsArticleViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.layout_item, parent, false)
+        val view = LayoutInflater
+            .from(parent.context)
+            .inflate(R.layout.layout_item, parent, false)
         return NewsArticleViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: NewsArticleViewHolder, position: Int) {
         val newsArticle = items[position]
-        val titleNewsArticle = newsArticle.title ?: ""
-        val publishedAtNewsArticle = newsArticle.publishedAt ?: ""
-        val urlToImageNewsArticle = newsArticle.urlToImage ?: ""
-        holder.bind(titleNewsArticle, publishedAtNewsArticle, urlToImageNewsArticle)
+        val newsArticleTitle = newsArticle.title.orEmpty()
+        val newsArticlePublishedAt =
+            newsArticle.publishedAt?.toString(AppConstants.NEWS_ARTICLE_DATE_FORMAT).orEmpty()
+        val newsArticleUrlToImage = newsArticle.urlToImage.orEmpty()
+        holder.bind(newsArticleTitle, newsArticlePublishedAt, newsArticleUrlToImage)
     }
 
     override fun getItemCount(): Int {
@@ -32,8 +37,12 @@ class NewsArticleAdapter : RecyclerView.Adapter<NewsArticleViewHolder>() {
     }
 
     fun addItems(newItems: List<NewsArticle>) {
-        items.addAll(newItems)
-        notifyDataSetChanged()
+        if (newItems.isNotEmpty()) {
+            items.addAll(newItems)
+            val newItemsCount = newItems.size
+            val newItemsPositionStart = items.lastIndex - newItemsCount
+            notifyItemRangeInserted(newItemsPositionStart, newItemsCount)
+        }
     }
 
 }
@@ -41,13 +50,13 @@ class NewsArticleAdapter : RecyclerView.Adapter<NewsArticleViewHolder>() {
 class NewsArticleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val imageNewsArticle = view.findViewById<ImageView>(R.id.imageNewsArticle)
-    private val titleNewsArticle = view.findViewById<TextView>(R.id.textViewTitleNewsArticle)
-    private val publishedAtNewsArticle =
-        view.findViewById<TextView>(R.id.textViewPublishedAtNewsArticle)
+    private val newsArticleTitle = view.findViewById<TextView>(R.id.textViewNewsArticleTitle)
+    private val newsArticlePublishedAt =
+        view.findViewById<TextView>(R.id.textViewNewsArticlePublishedAt)
 
     fun bind(title: String, publishedAt: String, urlToImage: String) {
-        titleNewsArticle.text = title
-        publishedAtNewsArticle.text = publishedAt
+        newsArticleTitle.text = title
+        newsArticlePublishedAt.text = publishedAt
         imageNewsArticle.load(urlToImage)
     }
 }

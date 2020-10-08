@@ -23,21 +23,21 @@
         app:layout_constraintGuide_percent="0.4" />
 
     <TextView
-        android:id="@+id/textViewTitleNewsArticle"
+        android:id="@+id/textViewNewsArticleTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/textViewPublishedAtNewsArticle"
+        app:layout_constraintBottom_toTopOf="@id/textViewNewsArticlePublishedAt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/guidLine"
         app:layout_constraintTop_toTopOf="@id/imageNewsArticle"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/textViewPublishedAtNewsArticle"
+        android:id="@+id/textViewNewsArticlePublishedAt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/imageNewsArticle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guidLine"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitleNewsArticle" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewNewsArticleTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>

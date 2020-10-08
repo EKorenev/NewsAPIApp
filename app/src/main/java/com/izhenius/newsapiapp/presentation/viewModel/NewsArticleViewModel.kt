@@ -4,26 +4,30 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.izhenius.newsapiapp.data.entity.NewsArticle
-import com.izhenius.newsapiapp.data.repository.provideNewsRepository
+import com.izhenius.newsapiapp.di.GetNewsArticlesUseCaseProvider
+import com.izhenius.newsapiapp.domain.model.NewsArticle
 import kotlinx.coroutines.launch
 
 class NewsArticleViewModel : ViewModel() {
 
-    private val mutableArticles = MutableLiveData<List<NewsArticle>>()
-    val articles: LiveData<List<NewsArticle>> get() = mutableArticles
+    private val _articles = MutableLiveData<List<NewsArticle>>()
+    val articles: LiveData<List<NewsArticle>> get() = _articles
+
+    private val getNewsArticlesUseCase by lazy(LazyThreadSafetyMode.NONE) {
+        GetNewsArticlesUseCaseProvider.provideUseCase()
+    }
 
     init {
         downloadStartListOfNews()
     }
 
     fun downloadStartListOfNews() {
-        downloadListOfNews(20, 1)
+        downloadListOfNews(1)
     }
 
-    fun downloadListOfNews(pageSize: Int, page: Int) {
+    fun downloadListOfNews(page: Int) {
         viewModelScope.launch {
-            mutableArticles.value = provideNewsRepository().getListOfNews(pageSize, page)
+            _articles.value = getNewsArticlesUseCase(page)
         }
     }
 }

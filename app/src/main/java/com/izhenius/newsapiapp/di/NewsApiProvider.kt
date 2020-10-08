@@ -1,19 +1,22 @@
-package com.izhenius.newsapiapp.data.network.api
+package com.izhenius.newsapiapp.di
 
+import com.izhenius.newsapiapp.data.network.api.news.NewsApiService
 import okhttp3.OkHttpClient
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-object NewsProvider {
+object NewsApiProvider {
 
-    private var newsApi: NewsApi? = null
+    @Volatile
+    private var api: NewsApiService? = null
 
-    fun provideApi(retrofit: Retrofit): NewsApi {
-        if (newsApi == null) {
-            newsApi = retrofit.create(NewsApi::class.java)
+    fun provideApi(retrofit: Retrofit): NewsApiService {
+        return api ?: synchronized(this) {
+            api ?: retrofit.create(NewsApiService::class.java).also {
+                api = it
+            }
         }
-        return newsApi!!
     }
 
     fun provideRetrofit(
