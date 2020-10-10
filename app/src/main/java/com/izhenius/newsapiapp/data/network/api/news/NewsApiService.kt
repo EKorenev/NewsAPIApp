@@ -16,6 +16,9 @@ interface NewsApiService {
         private const val MAIN_SEARCHING_WORD = "belarus"
         private const val SORT_BY = "publishedAt"
         const val GET_REQUEST_PARAMETERS =
-            "language=${AppConstants.NEWS_API_LANGUAGE}&q=$MAIN_SEARCHING_WORD&sortBy=$SORT_BY&apiKey=$API_KEY"
+            "language=${AppConstants.NEWS_API_LANGUAGE}" +
+                "&q=$MAIN_SEARCHING_WORD" +
+                "&sortBy=$SORT_BY" +
+                "&apiKey=$API_KEY"
     }
 }

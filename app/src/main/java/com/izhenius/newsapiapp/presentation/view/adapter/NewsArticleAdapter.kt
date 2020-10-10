@@ -44,7 +44,6 @@ class NewsArticleAdapter : RecyclerView.Adapter<NewsArticleViewHolder>() {
             notifyItemRangeInserted(newItemsPositionStart, newItemsCount)
         }
     }
-
 }
 
 class NewsArticleViewHolder(view: View) : RecyclerView.ViewHolder(view) {

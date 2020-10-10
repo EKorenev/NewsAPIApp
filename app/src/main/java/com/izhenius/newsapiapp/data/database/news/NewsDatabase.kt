@@ -9,5 +9,4 @@ import com.izhenius.newsapiapp.data.database.news.model.DatabaseNewsArticle
 abstract class NewsDatabase : RoomDatabase() {
 
     abstract fun newsArticleDao(): NewsArticleDao
-
 }
