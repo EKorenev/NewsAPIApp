@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.izhenius.newsapiapp.di.GetNewsArticlesUseCaseProvider
 import com.izhenius.newsapiapp.domain.model.NewsArticle
+import com.izhenius.newsapiapp.domain.model.Result
 import kotlinx.coroutines.launch
 
 class NewsArticleViewModel : ViewModel() {
@@ -27,7 +28,10 @@ class NewsArticleViewModel : ViewModel() {
 
     fun downloadListOfNews(page: Int) {
         viewModelScope.launch {
-            _articles.value = getNewsArticlesUseCase(page)
+            val result = getNewsArticlesUseCase(page)
+            if (result is Result.Success) {
+                _articles.value = result.value
+            }
         }
     }
 }
