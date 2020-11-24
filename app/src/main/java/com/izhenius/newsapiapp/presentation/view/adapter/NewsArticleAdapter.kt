@@ -1,13 +1,10 @@
 package com.izhenius.newsapiapp.presentation.view.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.izhenius.newsapiapp.R
+import com.izhenius.newsapiapp.databinding.LayoutItemBinding
 import com.izhenius.newsapiapp.domain.model.NewsArticle
 import com.izhenius.newsapiapp.util.AppConstants
 import com.izhenius.newsapiapp.util.toString
@@ -15,12 +12,15 @@ import com.izhenius.newsapiapp.util.toString
 class NewsArticleAdapter : RecyclerView.Adapter<NewsArticleViewHolder>() {
 
     private val items = mutableListOf<NewsArticle>()
+    private lateinit var binding: LayoutItemBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsArticleViewHolder {
-        val view = LayoutInflater
-            .from(parent.context)
-            .inflate(R.layout.layout_item, parent, false)
-        return NewsArticleViewHolder(view)
+        binding = LayoutItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return NewsArticleViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: NewsArticleViewHolder, position: Int) {
@@ -46,12 +46,12 @@ class NewsArticleAdapter : RecyclerView.Adapter<NewsArticleViewHolder>() {
     }
 }
 
-class NewsArticleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class NewsArticleViewHolder(layoutItemBinding: LayoutItemBinding) :
+    RecyclerView.ViewHolder(layoutItemBinding.root) {
 
-    private val imageNewsArticle = view.findViewById<ImageView>(R.id.imageNewsArticle)
-    private val newsArticleTitle = view.findViewById<TextView>(R.id.textViewNewsArticleTitle)
-    private val newsArticlePublishedAt =
-        view.findViewById<TextView>(R.id.textViewNewsArticlePublishedAt)
+    private val imageNewsArticle = layoutItemBinding.imageNewsArticle
+    private val newsArticleTitle = layoutItemBinding.textViewNewsArticleTitle
+    private val newsArticlePublishedAt = layoutItemBinding.textViewNewsArticlePublishedAt
 
     fun bind(title: String, publishedAt: String, urlToImage: String) {
         newsArticleTitle.text = title
